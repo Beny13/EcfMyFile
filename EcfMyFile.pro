@@ -26,3 +26,5 @@ HEADERS += \
     writer.h \
     zippedbuffer.h \
     zippedbufferpool.h
+
+OTHER_FILES +=

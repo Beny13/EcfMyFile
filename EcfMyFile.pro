@@ -17,8 +17,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     filepool.cpp \
-    writer.cpp
+    writer.cpp \
+    zippedbuffer.cpp \
+    zippedbufferpool.cpp
 
 HEADERS += \
     filepool.h \
-    writer.h
+    writer.h \
+    zippedbuffer.h \
+    zippedbufferpool.h

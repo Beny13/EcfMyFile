@@ -5,19 +5,17 @@
 #include <QString>
 #include <QMutex>
 #include <QByteArray>
+#include <QThread>
 
-class Writer
+class Writer : public QThread
 {
 public:
-    Writer(QString destination);
+    Writer(ZippedBufferPool pool);
     void createFile();
-    void tryStoreByteArray(QByteArray compressedDatas, QString filename);
 
 private:
-    QString _filename;
-    QList<QByteArray> _compressedDatas;
-    QList<QString> _filesnames;
-    QMutex _mutex;
+    ZippedBufferPool _pool;
+    QString _destination;
 };
 
 #endif // WRITER_H

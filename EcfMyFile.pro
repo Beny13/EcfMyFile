@@ -15,4 +15,10 @@ CONFIG   -= app_bundle
 TEMPLATE = app
 
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    filepool.cpp \
+    writer.cpp
+
+HEADERS += \
+    filepool.h \
+    writer.h

@@ -1,4 +1,5 @@
 #include "writer.h"
+
 #include <QMutexLocker>
 #include <QFile>
 #include <QDataStream>

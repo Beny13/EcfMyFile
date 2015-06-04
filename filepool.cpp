@@ -1,6 +1,7 @@
 #include "filepool.h"
 #include <QDir>
 #include <QMutexLocker>
+#include <QString>
 
 FilePool::FilePool(const QString &folder)
 {

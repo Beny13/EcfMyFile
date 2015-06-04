@@ -1,8 +1,11 @@
 #ifndef FILEPOOL_H
 #define FILEPOOL_H
-#include <QString>
+
 #include <QStringList>
 #include <QMutex>
+
+class QString;
+
 /**
  * @brief La class FilePool représente un ensemble de
  * fichier à traiter.

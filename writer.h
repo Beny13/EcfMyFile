@@ -1,20 +1,19 @@
 #ifndef WRITER_H
 #define WRITER_H
 
-#include <QList>
 #include <QString>
-#include <QMutex>
-#include <QByteArray>
 #include <QThread>
+
+#include "zippedbufferpool.h"
 
 class Writer : public QThread
 {
 public:
-    Writer(ZippedBufferPool pool);
+    Writer(ZippedBufferPool& pool, QString destination);
     void createFile();
 
 private:
-    ZippedBufferPool _pool;
+    ZippedBufferPool& _pool;
     QString _destination;
 };
 

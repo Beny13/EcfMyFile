@@ -8,7 +8,7 @@ ZippedBufferPool::ZippedBufferPool()
 
 void ZippedBufferPool::put(ZippedBuffer &zb)
 {
-    // QMutexLocker locker(&this->_mutex);
+    QMutexLocker locker(&this->_mutex);
     _pool.append(zb);
 }
 

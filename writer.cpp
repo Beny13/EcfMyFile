@@ -3,7 +3,6 @@
 #include <QList>
 #include <QMutexLocker>
 #include <QFile>
-#include <QDataStream>
 
 Writer::Writer(ZippedBufferPool &pool, QString destination) :
     _pool(pool), _destination(destination)
@@ -11,14 +10,13 @@ Writer::Writer(ZippedBufferPool &pool, QString destination) :
 }
 
 void Writer::createFile() {
-    /*QFile outfile(this->_destination);
-    outfile.open(QIODevice::WriteOnly);
+    QFile outfile(this->_destination);
+    outfile.open(QIODevice::WriteOnly & QIODevice::Truncate);
     QDataStream out(&outfile);
-    QPair<int, QString> pair;
-    while(pair.second) {
-        out << this->_pool.front().second.getArray();
-        this->_pool.pop_front();
-    }
 
-    outfile.close();*/
+    QPair<bool, ZippedBuffer> pair = _pool.tryGet();
+    while(pair.first)
+        pair.second.write(out);
+
+    outfile.close();
 }

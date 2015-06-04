@@ -16,6 +16,7 @@ private:
     QList<ZippedBuffer> _pool;
     QWaitCondition _cond;
     QMutex _mutex;
+    bool _done;
 };
 
 #endif // ZIPPEDBUFFERPOOL_H

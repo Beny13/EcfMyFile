@@ -3,28 +3,21 @@
 #include <QFile>
 #include <QDataStream>
 
-Writer::Writer(QString destination)
+Writer::Writer(ZippedBufferPool pool, QString destination):_pool(pool),_destination(destination)
 {
-    this->_filename = destination;
+
 }
 
 void Writer::createFile(){
-    QFile outfile(this->_filename+".ecf");
+    QFile outfile(this->_destination);
     outfile.open(QIODevice::WriteOnly);
     QDataStream out(&outfile);
-
-    while(!this->_compressedDatas.isEmpty()) {
-        out << qCompress(this->_compressedDatas.front());
-        this->_compressedDatas.pop_front();
+    QPair<int,string> plop;
+    plop.second;
+    while(!this->_pool.isEmpty()) {
+        out << this->_pool.front().second.getArray();
+        this->_pool.pop_front();
     }
 
     outfile.close();
-}
-
-
-void Writer::tryStoreByteArray(QByteArray compressedDatas, QString filename)
-{
-    QMutexLocker locker(&this->_mutex);
-    this->_compressedDatas.push_back(compressedDatas);
-    this->_filesnames.push_back(filename);
 }

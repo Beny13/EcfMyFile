@@ -2,32 +2,25 @@
 #include <string.h>
 #include <QString>
 
-#include "filepool.h"
-#include "writer.h"
+#include "epsifilecompressor.h"
 
 using namespace std;
 
-void compress(string source, string destination, int threadsCount)
-{
-    // Only works on folders
-    FilePool pool(QString(source));
-    Writer writer(QString(destination));
-
-
-}
-
-void extract(string source, string destination)
-{
-
-}
-
 int main(int argc, char *argv[])
 {
-    if (argc == 4 && strcmp(argv[1], "-x") == 0) {
-        if (strcmp(argv[1], "-x") == 0) {
-            extract(string(argv[2]), string(argv[3]));
+    if (argc == 4) {
+        QString arg1(argv[1]);
+        QString arg2(argv[2]);
+        QString argX("-x");
+
+        if (arg1 == argX) {
+            QString arg3(argv[3]);
+            EpsiFileCompressor compressor;
+            compressor.uncompress(arg2, arg3);
         } else {
-            compress(string(argv[1]), string(argv[2]), atoi(argv[3]));
+            int arg3 = atoi(argv[3]);
+            EpsiFileCompressor compressor(arg3);
+            compressor.compress(arg1, arg2);
         }
     }
 

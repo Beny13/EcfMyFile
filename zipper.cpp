@@ -18,13 +18,12 @@ void Zipper::processFile(const QString &filename) {
     QFile file(filename);
     // Ouvertue du fichier en mode lecture seule
     if( file.open(QFile::ReadOnly) == true) {
-        QDataStream in(&file); //creation du QDataStream
-        QByteArray tab = file.readAll(); //creation du QByteArray
-        ZippedBuffer *buff;
-        QDataStream qds;
-        qds << filename << tab;
-        buff->read(qds);
-        this->_bufferpool.put(*buff);
+        QByteArray datasFile = file.readAll(); //creation du QByteArray
+        ZippedBuffer buff;
+        QDataStream stream;
+        stream << filename << qCompress(datasFile);
+        buff.read(stream);
+        this->_bufferpool.put(buff);
 
     }
 }

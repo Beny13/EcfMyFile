@@ -8,12 +8,13 @@
 class Zipper : public QThread
 {
 public:
-    Zipper(FilePool &pool, ZippedBufferPool &buffpool);
+    Zipper(FilePool &pool, ZippedBufferPool &buffpool, const QString& rootpath);
     virtual void run();
 private:
     void processFile(const QString &filename);
     FilePool &_filepool;
     ZippedBufferPool &_bufferpool;
+    const QString& _rootpath;
 
 };
 

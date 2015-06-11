@@ -2,14 +2,19 @@
 #include <QDir>
 #include <QMutexLocker>
 #include <QString>
+#include <QDebug>
 
 FilePool::FilePool(const QString &folder)
 {
     findFileInFolderAndSubfolders(folder);
+    _canonicalRootPath = folder;
+    if (_canonicalRootPath.right(1) != "/")
+        _canonicalRootPath += "/";
 }
 void FilePool::findFileInFolderAndSubfolders(const QString &folder)
 {
     QDir dir(folder);
+
     // list all the entries of the current folder
     foreach (const QFileInfo &entry,
              dir.entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot)) {

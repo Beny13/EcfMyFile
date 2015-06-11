@@ -1,6 +1,7 @@
 #include "zippedbufferpool.h"
 
 #include <QMutexLocker>
+#include <QDebug>
 
 ZippedBufferPool::ZippedBufferPool()
 {
@@ -11,6 +12,7 @@ void ZippedBufferPool::put(ZippedBuffer &zb)
 {
     QMutexLocker locker(&this->_mutex);
     _pool.append(zb);
+    this->_cond.wakeAll();
 }
 
 void ZippedBufferPool::done()
@@ -23,10 +25,10 @@ QPair<bool, ZippedBuffer> ZippedBufferPool::tryGet()
 {
     QMutexLocker locker(&this->_mutex);
 
-    if (_pool.isEmpty())
+    if (_pool.isEmpty() && !_done)
         _cond.wait(&_mutex);
 
-    if (_done)
+    if (_pool.isEmpty())
         return QPair<bool, ZippedBuffer>(false, ZippedBuffer());
 
     QPair<bool, ZippedBuffer> res = QPair<bool, ZippedBuffer>(true, _pool.front());

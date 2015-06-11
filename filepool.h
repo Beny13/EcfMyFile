@@ -35,6 +35,7 @@ public:
      * @note Cette méthode est thread-safe
      */
     QString tryGetFile() ;
+    QString _canonicalRootPath;
 private:
     /**
      * @brief findFileInFolderAndSubfolders initialise le pool en parcourant récurcivement

@@ -8,13 +8,13 @@
 
 class Writer : public QThread
 {
+Q_OBJECT
 public:
-    Writer(ZippedBufferPool& pool, QString destination);
-    void createFile();
-
+    Writer(ZippedBufferPool& pool, const QString &destination);
+    virtual void run();
 private:
     ZippedBufferPool& _pool;
-    QString _destination;
+    const QString& _destination;
 };
 
 #endif // WRITER_H

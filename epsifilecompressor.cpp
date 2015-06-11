@@ -3,6 +3,12 @@
 #include "filepool.h"
 #include "writer.h"
 
+EpsiFileCompressor::EpsiFileCompressor() :
+    _threadCount(0)
+{
+
+}
+
 EpsiFileCompressor::EpsiFileCompressor(int threadCount) :
     _threadCount(threadCount)
 {

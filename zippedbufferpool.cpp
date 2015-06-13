@@ -10,7 +10,6 @@ ZippedBufferPool::ZippedBufferPool()
 
 void ZippedBufferPool::put(ZippedBuffer zb)
 {
-    qDebug() << zb.getRelativePath();
     QMutexLocker locker(&this->_mutex);
     _pool.append(zb);
     this->_cond.wakeAll();

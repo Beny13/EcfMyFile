@@ -9,11 +9,13 @@
 #include <QDataStream>
 #include <QByteArray>
 #include <QDebug>
+#include <QFileInfo>
+#include <QDir>
 
 using namespace std;
 
 EpsiFileCompressor::EpsiFileCompressor() :
-    _threadCount(0)
+    _threadCount(1)
 {
 }
 
@@ -48,27 +50,44 @@ void EpsiFileCompressor::compress(const QString &folder, const QString &ecfFileN
 void EpsiFileCompressor::uncompress(const QString &ecfFileName, const QString &folder)
 {
     qDebug() << "EpsiFileCompressor::uncompress(" << ecfFileName << "," << folder << ")";
-    /* BEN
+
+    // Checking if the folder already exists
+    QFileInfo fileInfo("./" + folder);
+    if (fileInfo.exists() && fileInfo.isFile()) {
+        qDebug() << folder << " already exists";
+        return;
+    }
+
+    // Reading zippedFile
     QFile zippedFile(ecfFileName);
     if (zippedFile.open(QIODevice::ReadOnly)) {
         QDataStream readStream(&zippedFile);
-        QString fileName;
-        QByteArray compressedFile;
+        QString filePath;
         ZippedBuffer buffer;
         while (!readStream.atEnd()) {
+            // Filling the ZippedBuffer
             buffer.read(readStream);
-            qDebug() << buffer.getRelativePath();
+            filePath = fileInfo.absolutePath() + "/" + folder + "/" + buffer.getRelativePath();
+
+            // Creating parent directories if needed
+            createFileParentDirectories(filePath);
+
+            // Write to new file
+            QFile unzippedFile(filePath);
+            if (unzippedFile.open(QIODevice::WriteOnly)) {
+                QDataStream newFileStream(&unzippedFile);
+                QByteArray uncompressed = qUncompress(buffer.getZippedData());
+                newFileStream.writeRawData(uncompressed.constData(), uncompressed.size());
+            }
+            unzippedFile.close();
         }
-        // QByteArray uncompressedArray(qUncompress(zippedFile.readAll()));
-    */
-
-    QFile compressedFile(ecfFileName);
-    if(compressedFile.open(QFile::ReadOnly) == true){
-        QByteArray uncompressedDatas = qUncompress(compressedFile.readAll());
-        QFile uncompressedFile(folder+"uncompressed_"+ecfFileName);
-        uncompressedFile.open(QFile::WriteOnly);
-        QDataStream uncompressedStream(&uncompressedFile);
-        //uncompressedStream.writeRawData(uncompressedArray.constData(),uncompressedArray.size());
     }
+}
 
+void EpsiFileCompressor::createFileParentDirectories(QString filePath)
+{
+    QDir fakeDir(filePath);
+    if (!fakeDir.exists()) {
+        fakeDir.mkpath("..");
+    }
 }

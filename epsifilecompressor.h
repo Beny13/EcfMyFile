@@ -43,8 +43,14 @@ public:
 private:
 
     /**
-     * @brief _threadCount Nombre de threads utilisés pour la compression
+     * @brief Méthode de création de dossier parent
+     * @param filePath : chemin du fichier dont le dossier parent doit être créé
      */
+    void createFileParentDirectories(QString filePath);
+
+    /**
+    * @brief _threadCount Nombre de threads utilisés pour la compression
+    */
     int _threadCount;
 };
 

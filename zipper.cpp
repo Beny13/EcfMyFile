@@ -22,7 +22,7 @@ void Zipper::run() {
 
 void Zipper::processFile(const QString &filename) {
     QString relativePath = filename;
-    relativePath = relativePath.replace(_rootpath, "");
+    relativePath = relativePath.replace(_rootpath + "/", "");
     QFile file(filename);
     // Ouvertue du fichier en mode lecture seule
     if(file.open(QFile::ReadOnly) == true) {

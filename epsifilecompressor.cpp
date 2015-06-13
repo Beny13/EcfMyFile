@@ -49,6 +49,7 @@ void EpsiFileCompressor::compress(const QString &folder, const QString &ecfFileN
 void EpsiFileCompressor::uncompress(const QString &ecfFileName, const QString &folder)
 {
     qDebug() << "EpsiFileCompressor::uncompress(" << ecfFileName << "," << folder << ")";
+    /* BEN
     QFile zippedFile(ecfFileName);
     if (zippedFile.open(QIODevice::ReadOnly)) {
         QDataStream readStream(&zippedFile);
@@ -60,6 +61,15 @@ void EpsiFileCompressor::uncompress(const QString &ecfFileName, const QString &f
             qDebug() << buffer.getRelativePath();
         }
         // QByteArray uncompressedArray(qUncompress(zippedFile.readAll()));
+    */
+
+    QFile compressedFile(ecfFileName);
+    if(compressedFile.open(QFile::ReadOnly) == true){
+        QByteArray uncompressedDatas = qUncompress(compressedFile.readAll());
+        QFile uncompressedFile(folder+"uncompressed_"+ecfFileName);
+        uncompressedFile.open(QFile::WriteOnly);
+        QDataStream uncompressedStream(&uncompressedFile);
+        //uncompressedStream.writeRawData(uncompressedArray.constData(),uncompressedArray.size());
     }
 
 }

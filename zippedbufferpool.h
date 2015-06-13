@@ -10,7 +10,7 @@ class ZippedBufferPool
 public:
     ZippedBufferPool();
     QPair<bool,ZippedBuffer> tryGet();
-    void put(ZippedBuffer& zb);
+    void put(ZippedBuffer zb);
     void done();
 private:
     QList<ZippedBuffer> _pool;

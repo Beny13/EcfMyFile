@@ -6,10 +6,10 @@
 
 FilePool::FilePool(const QString &folder)
 {
+    QDir dir(folder);
+    _canonicalRootPath = dir.absolutePath();
+
     findFileInFolderAndSubfolders(folder);
-    _canonicalRootPath = folder;
-    if (_canonicalRootPath.right(1) != "/")
-        _canonicalRootPath += "/";
 }
 void FilePool::findFileInFolderAndSubfolders(const QString &folder)
 {

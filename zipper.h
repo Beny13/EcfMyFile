@@ -5,6 +5,8 @@
 #include "zippedbufferpool.h"
 #include "zippedbuffer.h"
 #include <QFile>
+#include <QDataStream>
+
 class Zipper : public QThread
 {
 public:
@@ -15,6 +17,9 @@ private:
     FilePool &_filepool;
     ZippedBufferPool &_bufferpool;
     const QString& _rootpath;
+    QDataStream _stream;
+
+
 
 };
 

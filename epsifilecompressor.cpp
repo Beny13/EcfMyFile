@@ -15,7 +15,6 @@ using namespace std;
 EpsiFileCompressor::EpsiFileCompressor() :
     _threadCount(0)
 {
-    qDebug() << "Construtor EpsiFileCompressor";
 }
 
 EpsiFileCompressor::EpsiFileCompressor(int threadCount) :

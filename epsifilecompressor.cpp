@@ -4,7 +4,10 @@
 #include "writer.h"
 #include "zipper.h"
 #include "zippedbufferpool.h"
-#include <memory>
+#include "zippedbuffer.h"
+#include <QFile>
+#include <QDataStream>
+#include <QByteArray>
 #include <QDebug>
 
 using namespace std;
@@ -46,4 +49,17 @@ void EpsiFileCompressor::compress(const QString &folder, const QString &ecfFileN
 void EpsiFileCompressor::uncompress(const QString &ecfFileName, const QString &folder)
 {
     qDebug() << "EpsiFileCompressor::uncompress(" << ecfFileName << "," << folder << ")";
+    QFile zippedFile(ecfFileName);
+    if (zippedFile.open(QIODevice::ReadOnly)) {
+        QDataStream readStream(&zippedFile);
+        QString fileName;
+        QByteArray compressedFile;
+        ZippedBuffer buffer;
+        while (!readStream.atEnd()) {
+            buffer.read(readStream);
+            qDebug() << buffer.getRelativePath();
+        }
+        // QByteArray uncompressedArray(qUncompress(zippedFile.readAll()));
+    }
+
 }

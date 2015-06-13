@@ -18,7 +18,7 @@ void Writer::run()
     QDataStream out(&outfile);
 
     QPair<bool, ZippedBuffer> pair = _pool.tryGet();
-    while(pair.first) {
+    while (pair.first) {
         pair.second.write(out);
         pair = _pool.tryGet();
     }

@@ -12,7 +12,9 @@ public:
     void write(QDataStream &stream);
     void read(QDataStream &stream);
     void setRelativePath(QString path);
+    QString getRelativePath();
     void setZippedData(QByteArray zippedData);
+    QByteArray getZippedData();
 private:
     QString _relativePath;
     QByteArray _zippedData;

@@ -15,7 +15,7 @@
 using namespace std;
 
 EpsiFileCompressor::EpsiFileCompressor() :
-    _threadCount(0)
+    _threadCount(1)
 {
 }
 

@@ -36,11 +36,15 @@ public:
 
     /**
      * @brief Méthode de décompression d'un fichier .ecf
-     * @param size : taille souhaitée de l'explosion
-     * @param position : position du centre sur l'écran
+     * @param ecfFileName : chemin du fichier .ecf
+     * @param folder : dossier dans lequel sera décompressé le fichier .ecf
      */
     void uncompress(const QString &ecfFileName, const QString &folder);
 private:
+
+    /**
+     * @brief _threadCount Nombre de threads utilisés pour la compression
+     */
     int _threadCount;
 };
 

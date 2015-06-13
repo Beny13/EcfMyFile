@@ -7,7 +7,7 @@
 class QString;
 
 /**
- * @brief La class FilePool représente un ensemble de
+ * @brief La classe FilePool représente un ensemble de
  * fichier à traiter.
  */
 class FilePool
@@ -35,6 +35,9 @@ public:
      * @note Cette méthode est thread-safe
      */
     QString tryGetFile() ;
+    /**
+     * @brief _canonicalRootPath Chemin depuis la racine jusqu'au dossier à compresser
+     */
     QString _canonicalRootPath;
 private:
     /**
